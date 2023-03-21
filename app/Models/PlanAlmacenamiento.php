@@ -13,4 +13,8 @@ class PlanAlmacenamiento extends Model
     public function nube(){
         return $this->belongsTo(Archivo::class);
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

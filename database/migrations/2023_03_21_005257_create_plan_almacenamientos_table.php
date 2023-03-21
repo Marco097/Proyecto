@@ -17,6 +17,8 @@ return new class extends Migration
             $table->decimal('precio',8,2);
             $table->unsignedBigInteger('nube_id');
             $table->foreign('nube_id')->references('id')->on('nubes');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
