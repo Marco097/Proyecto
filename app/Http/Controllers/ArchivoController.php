@@ -18,9 +18,9 @@ class ArchivoController extends Controller
             $archivos = Archivo::all();
             //convirtiendo a array
             $response = $archivos->toArray();
-            $i=0;
+            $i = 0;
             foreach($archivos as $archivo) {
-                $response[$i]['nube'] = $archivo->nube->toArray();
+                $response[$i]["nube"] = $archivo->nube->toArray();
                 $detalle = $archivo->detalle_archivos->toArray();
                 $f=0;
                 foreach($archivo->detalle_archivos as $d){
@@ -31,7 +31,7 @@ class ArchivoController extends Controller
                 $response[$i]['detalleArchivo'] = $detalle;
                 $i++;
             }
-
+            //dd($response);
             return $response;
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -66,6 +66,7 @@ class ArchivoController extends Controller
                 $detalleArchivo = new DetalleArchivo();
                 $detalleArchivo->tipo_archivo = $det['tipoArchivo'];
                 $detalleArchivo->fecha_ingreso = $det['fechaIngreso'];
+                $detalleArchivo->tipo_archivo = $det['tipoArchivo'];
                 $detalleArchivo->tamaño = $det['tamaño'];
                 $detalleArchivo->archivo_id = $archivo->id;
                 if($detalleArchivo->save() <=0){
@@ -123,27 +124,24 @@ class ArchivoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-          
             $errores = 0;
             $archivo =  Archivo::findOrFail($id);
             $archivo->nombre = $request->nombre;
             $archivo->nube_id = $request->nube['id'];
-            if ($archivo->update() <= 0) {
+            if ($archivo->update() >= 1) {
                 $errores++;
             }
             $detalle = $request->detalleArchivo;
             foreach($detalle as $key => $det){
                 //creando un objeto de tipo Detalle
                 $detalleArchivo = DetalleArchivo::findOrFail($det['$id']);
-                $detalleArchivo->tipo_archivo = $det['tipoArchivo'];
-                $detalleArchivo->fecha_ingreso = $det['fechaIngreso'];
                 $detalleArchivo->tamaño= $det['tamaño'];
                 if($detalleArchivo->update() <=0){
                     $errores++;
                 }
             } 
-      
         
+         
     }
 
 
