@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArchivoController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NubeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +26,5 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/admin', [HomeController::class, 'dash'])->name('dash');
+Route::resource('nubes', NubeController::class);
 

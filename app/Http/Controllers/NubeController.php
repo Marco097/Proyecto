@@ -25,7 +25,7 @@ class NubeController extends Controller
      */
     public function create()
     {
-        return "Vista para crear nube";
+        return view('admin.nubes');
     }
 
     /**
@@ -92,7 +92,7 @@ class NubeController extends Controller
         try{
             $nube = Nube::findOrFail($id);
             if($nube->delete() >= 1){
-             return response()->json(['status'=>'ok','data'=>$nube],200);
+             return response()->json(['status'=>'ok','data'=>$nube],201);
             }
          }catch(\Exception $e){
              return $e->getMessage();

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Archivo;
-use App\Models\DetalleArchivo;
+
 use Illuminate\Http\Request;
 
 class ArchivoController extends Controller
@@ -16,21 +16,13 @@ class ArchivoController extends Controller
         //devolver una lista 
         try {
             $archivos = Archivo::all();
-            //convirtiendo a array
             $response = $archivos->toArray();
             $i = 0;
             foreach($archivos as $archivo) {
                 $response[$i]["nube"] = $archivo->nube->toArray();
-                $detalle = $archivo->detalle_archivos->toArray();
-                $f=0;
-                foreach($archivo->detalle_archivos as $d){
-                    $detalle[$f]['archivo'] = $d->archivo->toArray();
-                    $f++;
-                }
-                $response[$i]['detalleArchivo'] = $detalle;
+                $response[$i]["detalle_archivo"] = $archivo->detalleArchivo->toArray();
                 $i++;
             }
-            //dd($response);
             return $response;
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -52,30 +44,14 @@ class ArchivoController extends Controller
     public function store(Request $request)
     {
        try{
-        $errores = 0;
             $archivo = new Archivo();
             $archivo->nombre = $request->nombre;
             $archivo->nube_id = $request->nube['id'];
+            $archivo->detalle_archivo_id = $request->detalleArchivo['id'];
             if($archivo->save() >= 1){
-                $errores++;
-            }
-            $detalle = $request->detalleArchivo;
-            foreach($detalle as $key => $det){
-                //creando un objeto de tipo Detalle
-                $detalleArchivo = new DetalleArchivo();
-                $detalleArchivo->tipo_archivo = $det['tipoArchivo'];
-                $detalleArchivo->fecha_ingreso = $det['fechaIngreso'];
-                $detalleArchivo->tipo_archivo = $det['tipoArchivo'];
-                $detalleArchivo->tamaño = $det['tamaño'];
-                $detalleArchivo->archivo_id = $archivo->id;
-                if($detalleArchivo->save() <=0){
-                    $errores++;
-                }
-            }
-            if($errores == 0){
                 return response()->json(['status'=>'ok','data'=>$archivo],201);
             }else{
-                return response()->json(['status'=>'fail','data'=> null],409);
+                return response()->json(['status'=>'fail','data'=> $archivo],409);
             }
       }catch(\Exception $e){
           return $e->getMessage();
@@ -88,21 +64,10 @@ class ArchivoController extends Controller
     public function show(string $id)
     {
         try {
-            $archivos = Archivo::findOrFail($id);
-            $response = $archivos->toArray();
-            $i=0;
-            foreach($archivos as $archivo) {
-                $response[$i]["nube"] = $archivo->nube->toArray();
-                $detalle = $archivo->detalle_archivos->toArray();
-                $f=0;
-                foreach($archivo->detalle_archivos as $d){
-                    $detalle[$f]['archivo'] = $d->archivo->toArray();
-                    $f++;
-                }
-                $response[$i]['detalleArchivo'] = $detalle;
-                $i++;
-            }
-            //dd($response);
+            $archivo = Archivo::findOrFail($id);
+            $response = $archivo->toArray();
+                $response["nube"] = $archivo->nube->toArray();
+                $response["detalle_archivo"] = $archivo->detalleArchivo->toArray();
             return $response;
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -122,22 +87,18 @@ class ArchivoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-            $errores = 0;
+        try{
             $archivo =  Archivo::findOrFail($id);
             $archivo->nombre = $request->nombre;
             $archivo->nube_id = $request->nube['id'];
+            $archivo->detalle_archivo_id = $request->detalleArchivo['id'];
             if ($archivo->update() >= 1) {
-                $errores++;
+                return response()->json(['status'=>'ok','data'=>$archivo],202);
             }
-            $detalle = $request->detalleArchivo;
-            foreach($detalle as $key => $det){
-                //creando un objeto de tipo Detalle
-                $detalleArchivo = DetalleArchivo::findOrFail($det['$id']);
-                $detalleArchivo->tamaño= $det['tamaño'];
-                if($detalleArchivo->update() <=0){
-                    $errores++;
-                }
-            } 
+         }catch(\Exception $e){
+             return $e->getMessage();
+         }
+           
         
          
     }

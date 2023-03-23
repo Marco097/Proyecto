@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('archivos', function (Blueprint $table) {
+        Schema::create('detalle_archivos', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre',20)->unique();
-            $table->unsignedBigInteger('nube_id');
-            $table->foreign('nube_id')->references('id')->on('nubes');
+            $table->string('tipo_archivo',20);
+            $table->date('fecha_ingreso');
+            $table->decimal('tamaño',8,2);
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('archivos');
+        Schema::dropIfExists('detalle_archivos');
     }
 };

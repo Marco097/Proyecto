@@ -20,6 +20,7 @@ class PlanAlmacenamientoController extends Controller
             $i = 0;
             foreach($almacenamientos as $almacenamiento) {
                 $response[$i]["nube"] = $almacenamiento->nube->toArray();
+                $response[$i]["user"] = $almacenamiento->user->toArray();
                 $i++;
             }
             //dd($response);
@@ -47,14 +48,19 @@ class PlanAlmacenamientoController extends Controller
             DB::beginTransaction();
             //crear la instancia de alquiler
             $almacenamiento  = new PlanAlmacenamiento();
-            $almacenamiento->nombre_plan = $request->nombrePlan;
+            $almacenamiento->nombre_plan = $request->nombre_plan;
             $almacenamiento->precio = $request->precio;
             $almacenamiento->nube_id = $request->nube['id'];
+            $almacenamiento->user_id = $request->user['id'];
             if($almacenamiento->save() <=0){
                 $errores++;
+            }
+                if($errores == 0){
+                    DB::commit();
                 return response()->json(['status'=>'ok','data'=>$almacenamiento],201);
             }else{
-                return response()->json(['status'=>'fail','data'=>$almacenamiento],409);
+                DB::commit();
+                return response()->json(['status'=>'fail','data'=> null],409);
             }
       }catch(\Exception $e){
           return $e->getMessage();
@@ -72,6 +78,7 @@ class PlanAlmacenamientoController extends Controller
             $almacenamiento = PlanAlmacenamiento::findOrFail($id);
             $response = $almacenamiento->toArray();
             $response["nube"] = $almacenamiento->nube->toArray();
+            $response["user"] = $almacenamiento->user->toArray();
             //dd($response);
             return $response;
         } catch (\Exception $e) {
@@ -94,9 +101,10 @@ class PlanAlmacenamientoController extends Controller
     {
         try {
             $almacenamiento =  PlanAlmacenamiento::findOrFail($id);
-            $almacenamiento->nombre_plan = $request->nombrePlan;
+            $almacenamiento->nombre_plan = $request->nombre_plan;
             $almacenamiento->precio = $request->precio;
             $almacenamiento->nube_id = $request->nube['id'];
+            $almacenamiento->user_id = $request->user['id'];
             if ($almacenamiento->update() >= 1) {
                 return response()->json(['status' => 'ok', 'data' => $almacenamiento], 201);
             } else {

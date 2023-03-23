@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Nube extends Model
 {
     use HasFactory;
-    protected $table = "nubes";
     
     public function archivos(){
         return $this->hasMany(Archivo::class);
