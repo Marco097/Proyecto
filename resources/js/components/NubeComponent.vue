@@ -201,7 +201,7 @@
                         });
                         break;
                     case "del":
-                        if(statusCode == 200){
+                        if(statusCode == 201){
                                 me.nubes.splice(this.editedNube,1);
                                 Toast.fire({
                                     icon: 'success',
@@ -220,6 +220,7 @@
       
     },
     mounted() {
+         //this.$swal()
      this.fetchNubes();
         }
 }
