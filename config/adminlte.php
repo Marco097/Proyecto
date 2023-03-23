@@ -313,7 +313,7 @@ return [
         ],
         [
             'text'        => 'Inicio',
-            'url'         => 'admin/home',
+            'url'         => '/home',
             'icon'        => 'fas fw-fw fa-home',
             'icon_color'  => 'success',
             'label_color' => 'success',
@@ -322,13 +322,13 @@ return [
         ['header' => 'TABLAS'],
         [
             'text'       => 'Nube',
-            'route'      => 'nubes.create',
             'icon'       => 'fas fw fa-cloud',
+            'route'      => 'nubes.create',
         ],
         [
             'text'       => 'Archivo',
             'icon'       => 'fas fw fa-file',
-            'url'        => '/home',
+            'route'        => 'archivos.create',
         ],
         [
             'text'       => 'Plan',

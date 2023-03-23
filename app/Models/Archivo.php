@@ -14,7 +14,16 @@ class Archivo extends Model
         return $this->belongsTo(Nube::class);
     }
 
-    public function detalle_archivos(){
-        return $this->hasMany(DetalleArchivo::class);
+    public function tipo_archivo(){
+        return $this->belongsTo(TipoArchivo::class);
+    }
+
+    
+    public function tamaño(){
+        return $this->belongsTo(Tamaño::class);
+    }
+
+    public function fecha_ingreso(){
+        return $this->belongsTo(FechaIngreso::class);
     }
 }

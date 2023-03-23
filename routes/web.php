@@ -5,6 +5,7 @@ use App\Http\Controllers\ArchivoController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NubeController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,4 +28,5 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/admin', [HomeController::class, 'dash'])->name('dash');
 Route::resource('nubes', NubeController::class);
+Route::resource('archivos', ArchivoController::class);
 

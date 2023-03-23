@@ -20,7 +20,9 @@ class ArchivoController extends Controller
             $i = 0;
             foreach($archivos as $archivo) {
                 $response[$i]["nube"] = $archivo->nube->toArray();
-                $response[$i]["detalle_archivo"] = $archivo->detalleArchivo->toArray();
+                $response[$i]["tipo_archivo"] = $archivo->tipo_archivo->toArray();
+                $response[$i]["tamaño"] = $archivo->tamaño->toArray();
+                $response[$i]["fecha_ingreso"] = $archivo->fecha_ingreso->toArray();
                 $i++;
             }
             return $response;
@@ -34,8 +36,7 @@ class ArchivoController extends Controller
      */
     public function create()
     {
-        //
-        return "Vista para crear archivos";
+        return view('admin.archivos');
     }
 
     /**
@@ -47,7 +48,9 @@ class ArchivoController extends Controller
             $archivo = new Archivo();
             $archivo->nombre = $request->nombre;
             $archivo->nube_id = $request->nube['id'];
-            $archivo->detalle_archivo_id = $request->detalleArchivo['id'];
+            $archivo->tipo_archivo_id = $request->tipo_archivo['id'];
+            $archivo->tamaño_id = $request->tamaño['id'];
+            $archivo->fecha_ingreso_id = $request->fecha_ingreso['id'];
             if($archivo->save() >= 1){
                 return response()->json(['status'=>'ok','data'=>$archivo],201);
             }else{
@@ -67,7 +70,9 @@ class ArchivoController extends Controller
             $archivo = Archivo::findOrFail($id);
             $response = $archivo->toArray();
                 $response["nube"] = $archivo->nube->toArray();
-                $response["detalle_archivo"] = $archivo->detalleArchivo->toArray();
+                $response["tipo_archivo"] = $archivo->tipo_archivo->toArray();
+                $response["tamaño"] = $archivo->tamaño->toArray();
+                $response["fecha_ingreso"] = $archivo->fecha_ingreso->toArray();
             return $response;
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -91,7 +96,9 @@ class ArchivoController extends Controller
             $archivo =  Archivo::findOrFail($id);
             $archivo->nombre = $request->nombre;
             $archivo->nube_id = $request->nube['id'];
-            $archivo->detalle_archivo_id = $request->detalleArchivo['id'];
+            $archivo->tipo_archivo_id = $request->tipo_archivo['id'];
+            $archivo->tamaño_id = $request->tamaño['id'];
+            $archivo->fecha_ingreso_id = $request->fecha_ingreso['id'];
             if ($archivo->update() >= 1) {
                 return response()->json(['status'=>'ok','data'=>$archivo],202);
             }

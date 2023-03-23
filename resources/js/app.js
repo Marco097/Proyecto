@@ -26,8 +26,10 @@ const app = createApp({});
 
 import ExampleComponent from './components/ExampleComponent.vue';
 import NubeComponent from './components/NubeComponent.vue';
+import ArchivoComponent from './components/ArchivoComponent.vue';
 app.component('example-component', ExampleComponent);
 app.component('nube-component', NubeComponent);
+app.component('archivo-component', ArchivoComponent);
 
 /**
  * The following block of code may be used to automatically register your

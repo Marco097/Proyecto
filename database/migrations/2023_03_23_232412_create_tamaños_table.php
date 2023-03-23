@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('detalle_archivos', function (Blueprint $table) {
+        Schema::create('tamaños', function (Blueprint $table) {
             $table->id();
-            $table->string('tipo_archivo',20);
-            $table->date('fecha_ingreso');
-            $table->decimal('tamaño',8,2);
+            $table->string('tamaño',20);
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('detalle_archivos');
+        Schema::dropIfExists('tamaños');
     }
 };

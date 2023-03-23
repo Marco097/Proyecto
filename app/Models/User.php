@@ -43,7 +43,7 @@ class User extends Authenticatable
     ];
 
     public function PlanAlmacenamientos(){
-        return $this->hasMany(Nube::class);
+        return $this->hasMany(PlanAlmacenamiento::class);
     }
 
     public function adminlte_image()
