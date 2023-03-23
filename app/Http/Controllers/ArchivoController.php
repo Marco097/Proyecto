@@ -25,7 +25,6 @@ class ArchivoController extends Controller
                 $f=0;
                 foreach($archivo->detalle_archivos as $d){
                     $detalle[$f]['archivo'] = $d->archivo->toArray();
-                    $detalle[$f]['archivo']['nube'] = $d->archivo->nube->toArray();
                     $f++;
                 }
                 $response[$i]['detalleArchivo'] = $detalle;
@@ -98,7 +97,6 @@ class ArchivoController extends Controller
                 $f=0;
                 foreach($archivo->detalle_archivos as $d){
                     $detalle[$f]['archivo'] = $d->archivo->toArray();
-                    $detalle[$f]['archivo']['nube'] = $d->archivo->nube->toArray();
                     $f++;
                 }
                 $response[$i]['detalleArchivo'] = $detalle;
