@@ -18,7 +18,6 @@ class Archivo extends Model
         return $this->belongsTo(TipoArchivo::class);
     }
 
-    
     public function tamaño(){
         return $this->belongsTo(Tamaño::class);
     }

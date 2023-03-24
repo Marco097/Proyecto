@@ -31,9 +31,9 @@
                             <tr v-for="item in archivos" :key="item.id">
                                 <td>{{ item.nombre }}</td>
                                 <td>{{ item.nube.almacenamiento }}</td>
-                                <td>{{ item.detalle_archivo.tipo_archivo }}</td>
-                                <td>{{ item.detalle_archivo.fecha_ingreso }}</td>
-                                <td>{{ item.detalle_archivo.tamaño }}</td>
+                                <td>{{ item.tipo_archivo.tipo_archivo }}</td>
+                                <td>{{ item.fecha_ingreso.fecha_ingreso }}</td>
+                                <td>{{ item.tamaño.tamaño }}</td>
                                 <td>
                                     <button type="button" class="btn btn-primary btn-sm" @click="showDialogEditar(item)">Editar</button>
                                     &nbsp;
@@ -71,17 +71,36 @@
                                 </option>
                             </select>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-6">
-                            <label for="detalle_archivo">Detalle Archivo</label>
-                            <select v-model="archivo.detalle_archivo_id" class="form-control">
-                                <option v-for="detalle_archivo in detalle_archivos" :value="detalle_archivo.id">
-                                    {{ detalle_archivo.tipo_archivo }}
+                        <div class="col-6">
+                            <label for="tipo_archivo">Tipo Archivo</label>
+                            <select v-model="archivo.tipo_archivo" class="form-control">
+                                <option v-for="tipo_archivo in tipo_archivos" :value="tipo_archivo.id">
+                                    {{ tipo_archivo.tipo_archivo }}
                                 </option>
                             </select>
+
                         </div>
-      </div>
+                        <div class="col-6">
+                            <label for="tamaño">Tamaño</label>
+                            <select v-model="archivo.tamaño" class="form-control">
+                                <option v-for="tamaño in tamaños" :value="tamaño.id">
+                                    {{ tamaño.tamaño }}
+                                </option>
+                            </select>
+
+                        </div>
+                        <div class="col-6">
+                            <label for="fecha_ingreso">Fecha Ingreso</label>
+                            <select v-model="archivo.fecha_ingreso" class="form-control">
+                                <option v-for="fecha_ingreso in fecha_ingresos" :value="fecha_ingreso.id">
+                                    {{ fecha_ingreso.fecha_ingreso }}
+                                </option>
+                            </select>
+
+                        </div>
+                    </div>
+                    
+                    
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -100,16 +119,22 @@
                 archivo:{
                     id:null,
                     nombre:"",
-                    nube: null,
-                    detalle_archivo: null,
                     nube_id: null,
-                    detalle_archivo_id: null
+                    tipo_archivo_id:null,
+                    tamaño_id:null,
+                    fecha_ingreso_id:null,
+                    nube: null,
+                    tipo_archivo: null,
+                    tamaño: null,
+                    fecha_ingreso: null
                 },
                 editedArchivo: -1,
                 archivoErrors:{
                     nombre:false,
                     nube: false,
-                    detalle_archivo: false
+                    tipo_archivo: false,
+                    tamaño: false,
+                    fecha_ingreso:false
                 }
             }
         },
@@ -136,26 +161,47 @@
                 me.nubes = response.data;
             })
         },
-        async fetchDetalle() {
+        async fetchTipos() {
             let me = this;
-            await this.axios.get('/detalle_archivos')
+            await this.axios.get('/tipo_archivos')
             .then(response => {
-                me.detalle_archivos = response.data;
-            });
+                me.tipo_archivos = response.data;
+            })
         },
+        async fetchTamaño() {
+            let me = this;
+            await this.axios.get('/tamaños')
+            .then(response => {
+                me.tamaños = response.data;
+            })
+        },
+        async fetchFecha() {
+            let me = this;
+            await this.axios.get('/fecha_ingresos')
+            .then(response => {
+                me.fecha_ingresos = response.data;
+            })
+        },
+
             showDialog(){
                 this.archivo = {
                     id:null,
                     nombre:"",
                     nube: null,
-                    detalle_archivo: null,
+                    tipo_archivo: null,
+                    tamaño: null,
+                    fecha_ingreso: null,
                     nube_id: null,
-                    detalle_archivo_id: null
+                    tipo_archivo_id:null,
+                    tamaño_id:null,
+                    fecha_ingreso_id:null
                 };
                 this.archivoErrors = {
                     nombre:false,
                     nube: false,
-                    detalle_archivo: false
+                    tipo_archivo: false,
+                    tamaño: false,
+                    fecha_ingreso:false
                 };
                 $('#archivoModal').modal('show');
             },
@@ -172,7 +218,9 @@
                         id:null,
                         nombre:"",
                         nube: null,
-                        detalle_archivo: null,
+                        tipo_archivo: null,
+                    tamaño: null,
+                    fecha_ingreso: null
                     };
                 },300)
                 $('#archivoModal').modal('hide');
@@ -182,20 +230,27 @@
 
             me.archivo.nombre == '' ? me.archivoErrors.nombre = true : me.archivoErrors.nombre = false;
             me.archivo.nube_id == null ? me.archivoErrors.nube = true : me.archivoErrors.nube = false;
-            me.archivo.detalle_archivo_id == null ? me.archivoErrors.detalle_archivo = true : me.archivoErrors.detalle_archivo = false;
+            me.archivo.tipo_archivo_id == null ? me.archivoErrors.tipo_archivo = true : me.archivoErrors.tipo_archivo = false;
+            me.archivo.tamaño_id == null ? me.archivoErrors.tamaño = true : me.archivoErrors.tamaño = false;
+            me.archivo.fecha_ingreso_id == null ? me.archivoErrors.fecha_ingreso = true : me.archivoErrors.fecha_ingreso = false;
             if (me.archivo.nombre) {
                 let accion = me.archivo.id == null ? "add" : "upd";
 
                 me.archivo.nube = {
                     "id": me.archivo.nube_id
                 };
-                me.archivo.detalle_archivo = {
-                    "id": me.archivo.detalle_archivo_id
+                me.archivo.tipo_archivo = {
+                    "id": me.archivo.tipo_archivo_id
+                };
+                me.archivo.tamaño = {
+                    "id": me.archivo.tamaño_id
+                };
+                me.archivo.fecha_ingreso = {
+                    "id": me.archivo.fecha_ingreso_id
                 };
                 if (accion == "add") {
                     await this.axios.post('/archivos', me.archivo)
                         .then(response => {
-                            //console.log(response.data);
                             if (response.status == 201) {
                                 me.verificarAccion(
                                     response.data.data,
@@ -208,7 +263,6 @@
                             console.log(errors);
                         })
                 } else {
-                    // peticion para actualizar una marca
                     await this.axios
                         .put(`/archivos/${me.archivo.id}`, me.archivo)
                         .then(response => {
@@ -264,15 +318,14 @@
                     me.fetchArchivos();
                     Toast.fire({
                         icon: 'success',
-                        'title': 'Auto Registrada con Exito...!'
+                        'title': 'Archivo Guardado con Exito...!'
                     });
                     break;
-                        break;
                     case "upd":
                         Object.assign(me.archivos[me.editedArchivo], archivo);
                         Toast.fire({
                             icon: 'success',
-                            'title': 'Nube Actualizada con Exito..!'
+                            'title': 'Archivo Actualizada con Exito..!'
                         });
                         break;
                     case "del":
@@ -280,12 +333,12 @@
                                 me.archivos.splice(this.editedArchivo,1);
                                 Toast.fire({
                                     icon: 'success',
-                                    'title': 'Nube Eliminar..!'
+                                    'title': 'Archivo Eliminado..!'
                                 });
                             }else{
                             Toast.fire({
                                 icon: 'warning',
-                                'title': 'Error al eliminar la Nube, intente de nuevo'
+                                'title': 'Error al eliminar la Archivo, intente de nuevo'
                             });
                         }
                         break;
@@ -297,7 +350,9 @@
     mounted() {
      this.fetchArchivos();
             this.fetchNubes();
-            this.fetchDetalle();
+            this.fetchTipos();
+            this.fetchTamaño();
+            this.fetchFecha();
         }
 }
 </script>

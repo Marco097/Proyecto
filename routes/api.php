@@ -4,7 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NubeController;
 use App\Http\Controllers\ArchivoController;
-use App\Http\Controllers\PlanAlmacenamientoController;
+use App\Http\Controllers\TipoArchivoController;
+use App\Http\Controllers\TamañoController;
+use App\Http\Controllers\FechaIngresoController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,4 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('archivos', ArchivoController::class);
 Route::resource('nubes', NubeController::class);
-Route::resource('plan_almacenamientos', PlanAlmacenamientoController::class);
+Route::resource('tipo_archivos', TipoArchivoController::class);
+Route::resource('tamaños', TamañoController::class);
+Route::resource('fecha_ingresos', FechaIngresoController::class);
+

@@ -1,9 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Archivo;
-
 use Illuminate\Http\Request;
 
 class ArchivoController extends Controller
@@ -52,7 +50,7 @@ class ArchivoController extends Controller
             $archivo->tamaño_id = $request->tamaño['id'];
             $archivo->fecha_ingreso_id = $request->fecha_ingreso['id'];
             if($archivo->save() >= 1){
-                return response()->json(['status'=>'ok','data'=>$archivo],201);
+                return response()->json(['status'=>'ok','data'=> $archivo],201);
             }else{
                 return response()->json(['status'=>'fail','data'=> $archivo],409);
             }

@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArchivoController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NubeController;
-
+use App\Http\Controllers\TipoArchivoController;
+use App\Http\Controllers\TamañoController;
+use App\Http\Controllers\FechaIngresoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,4 +31,6 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/admin', [HomeController::class, 'dash'])->name('dash');
 Route::resource('nubes', NubeController::class);
 Route::resource('archivos', ArchivoController::class);
-
+Route::resource('tipo_archivos', TipoArchivoController::class);
+Route::resource('tamaños', TamañoController::class);
+Route::resource('fecha_ingresos', FechaIngresoController::class);

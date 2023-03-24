@@ -16,8 +16,12 @@ return new class extends Migration
             $table->string('nombre',20)->unique();
             $table->unsignedBigInteger('nube_id');
             $table->foreign('nube_id')->references('id')->on('nubes');
-            $table->unsignedBigInteger('detalle_archivo_id');
-            $table->foreign('detalle_archivo_id')->references('id')->on('detalle_archivos');
+            $table->unsignedBigInteger('tipo_archivo_id');
+            $table->foreign('tipo_archivo_id')->references('id')->on('tipo_archivos');
+            $table->unsignedBigInteger('tamaño_id');
+            $table->foreign('tamaño_id')->references('id')->on('tamaños');
+            $table->unsignedBigInteger('fecha_ingreso_id');
+            $table->foreign('fecha_ingreso_id')->references('id')->on('fecha_ingresos');
             $table->timestamps();
         });
     }
