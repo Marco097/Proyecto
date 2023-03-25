@@ -7,6 +7,8 @@ use App\Http\Controllers\NubeController;
 use App\Http\Controllers\TipoArchivoController;
 use App\Http\Controllers\TamañoController;
 use App\Http\Controllers\FechaIngresoController;
+use App\Http\Controllers\PlanAlmacenamientoController;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,9 +30,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/admin', [HomeController::class, 'dash'])->name('dash');
-Route::resource('nubes', NubeController::class);
-Route::resource('archivos', ArchivoController::class);
-Route::resource('tipo_archivos', TipoArchivoController::class);
-Route::resource('tamaños', TamañoController::class);
-Route::resource('fecha_ingresos', FechaIngresoController::class);
+Route::get('/admin', [HomeController::class, 'dash'])->name('admin.dash')->middleware('auth.admin');
+Route::resource('users', User::class);
+Route::resource('nubes', NubeController::class)->middleware('auth.admin');
+Route::resource('archivos', ArchivoController::class)->middleware('auth.admin');
+Route::resource('tipo_archivos', TipoArchivoController::class)->middleware('auth.admin');
+Route::resource('tamaños', TamañoController::class)->middleware('auth.admin');
+Route::resource('fecha_ingresos', FechaIngresoController::class)->middleware('auth.admin');
+Route::resource('plan_almacenamientos', PlanAlmacenamientoController::class);
+

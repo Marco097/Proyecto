@@ -27,9 +27,13 @@ const app = createApp({});
 import ExampleComponent from './components/ExampleComponent.vue';
 import NubeComponent from './components/NubeComponent.vue';
 import ArchivoComponent from './components/ArchivoComponent.vue';
+import Plan_AlmacenamientoComponent from './components/PlanComponent.vue';
+import FormComponent from './components/PlanAlmacenamiento/FormComponent.vue';
 app.component('example-component', ExampleComponent);
 app.component('nube-component', NubeComponent);
 app.component('archivo-component', ArchivoComponent);
+app.component('plan-component', Plan_AlmacenamientoComponent);
+app.component('form-component', FormComponent);
 
 
 /**

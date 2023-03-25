@@ -282,7 +282,7 @@
                     }
                 }
             },
-            async eliminar(nube){
+            async eliminar(archivo){
                 let me = this;
                 this.$swal.fire({
                     title: 'Seguro/a de eliminar este registro?',
@@ -295,8 +295,8 @@
                     cancelButtonText: 'No',
                     }).then((result) => {
                     if(result.value){
-                        me.editedNube = me.nubes.indexOf(nube);
-                        this.axios.delete(`/nubes/${nube.id}`)
+                        me.editedArchivo = me.archivos.indexOf(this.archivo);
+                        this.axios.delete(`/archivos/${archivo.id}`)
                         .then(response => {
                             me.verificarAccion(null,response.status,"del");
                         }).catch(errors => {

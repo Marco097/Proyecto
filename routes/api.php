@@ -7,6 +7,8 @@ use App\Http\Controllers\ArchivoController;
 use App\Http\Controllers\TipoArchivoController;
 use App\Http\Controllers\TamañoController;
 use App\Http\Controllers\FechaIngresoController;
+use App\Http\Controllers\PlanAlmacenamientoController;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,10 +24,11 @@ use App\Http\Controllers\FechaIngresoController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+Route::resource('users', User::class);
 Route::resource('archivos', ArchivoController::class);
 Route::resource('nubes', NubeController::class);
 Route::resource('tipo_archivos', TipoArchivoController::class);
 Route::resource('tamaños', TamañoController::class);
 Route::resource('fecha_ingresos', FechaIngresoController::class);
+Route::resource('plan_almacenamientos', PlanAlmacenamientoController::class);
 

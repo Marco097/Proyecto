@@ -35,7 +35,7 @@ class PlanAlmacenamientoController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.plan');
     }
 
     /**
@@ -46,7 +46,6 @@ class PlanAlmacenamientoController extends Controller
         try{
             $errores = 0;
             DB::beginTransaction();
-            //crear la instancia de alquiler
             $almacenamiento  = new PlanAlmacenamiento();
             $almacenamiento->nombre_plan = $request->nombre_plan;
             $almacenamiento->precio = $request->precio;

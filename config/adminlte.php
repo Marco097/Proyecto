@@ -333,7 +333,7 @@ return [
         [
             'text'       => 'Plan',
             'icon'       => 'fas fw fa-shop',
-            'url'        => '/home',
+            'route'        => 'plan_almacenamientos.create',
         ],
     ],
 
