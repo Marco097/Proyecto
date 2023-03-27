@@ -18,17 +18,22 @@
                             <table class="table bordered" >
                                 <div class="container">
             <div class="row justify-content-center" v-for="item in plan_almacenamientos" :key="item.id">
-                    <div class="card" style="width: 20rem;">
+                    <div class="card" style="width: 25rem;">
                       <img src="https://picsum.photos/300/300" class="card-img-top" alt="">
                       <div class="card-body">
-                        <h5 class="card-title text-bold">{{ item.nombre_plan }}
+                        <h5 class="card-title text-bold">
+
+                            {{ item.nombre_plan }}
                             &nbsp;
                             {{ item.precio }}
                             &nbsp;
                             {{ item.nube.almacenamiento }}
                             &nbsp;
-                            {{ item.user.email }}</h5>
-                        <a href="#">   <td>
+                            {{ item.user.email }}
+                            
+                            </h5>
+                        <a href="#">  
+                             <td>
                                          <button type="button" class="btn btn-primary btn-sm" @click="showDialogEditar(item)">Editar</button>
                                             &nbsp;
                                             <button type="button" class="btn btn-danger btn-sm" @click="eliminar(item)">Eliminar</button>
@@ -37,13 +42,7 @@
                           </div>
                         </div>
                     </div>
-            </div>
-                                <tbody>
-                                <tr v-for="item in plan_almacenamientos" :key="item.id">
-                               
-                                </tr>
-                                </tbody>
-
+            </div>      
                         </table>
                     </div>
                      </div>
@@ -73,7 +72,7 @@
                     {{ nube.almacenamiento }}
                 </option>
             </select>
-            <span class="text-danger" v-show="planErrors.nube">Seleccione la Nube </span>
+            <span class="text-danger" v-show="planErrors.nube">Seleccione la Nube</span>
         </div>
       </div>
       <div class="row">
@@ -83,13 +82,13 @@
             <span class="text-danger" v-show="planErrors.precio">Precio es requerido</span>
         </div>
         <div class="col-6">
-            <label for="user">Usuario </label>
-            <select v-model="planErrors.users_id" class="form-control">
+            <label for="usuario">Usuario </label>
+            <select v-model="planErrors.user_id" class="form-control">
                 <option v-for="user in users" :value="user.id">
                     {{ user.email }}
                 </option>
             </select>
-            <span class="text-danger" v-show="planErrors.user">Seleccione el Usuario </span>
+           
         </div>
       </div>
     </div>
@@ -124,7 +123,7 @@
                     user:false
                 },
                 nubes:[],
-                users:[],
+                users:[]
             }
         },
         computed:{
@@ -154,7 +153,6 @@
                 let me = this;
                 await this.axios.get('/users')
                 .then(response =>{
-                    console.log(response.data);
                     me.users = response.data;
                 })
             },
@@ -166,7 +164,7 @@
                     nube:null,
                     user:null,
                     nube_id:null,
-                    user_id:null,
+                    user_id:null
                 };
                 this.planErrors = {
                     nombre_plan:false,
@@ -176,11 +174,11 @@
                 };
                 $('#planModal').modal('show');
             },
-            showDialogEditar(archivo){
+            showDialogEditar(plan_almacenamiento){
                 let me = this;
                 $('#planModal').modal('show');
-                me.editedPlan = me.plan_almacenamientos.indexOf(this.plan_almacenamiento);
-                me.plan_almacenamiento = Object.assign({},this.plan_almacenamiento);
+                me.editedPlan = me.plan_almacenamientos.indexOf(plan_almacenamiento);
+                me.plan_almacenamiento = Object.assign({},plan_almacenamiento);
             },
             hideDialog(){
                 let me = this;
@@ -190,7 +188,7 @@
                        nombre_plan:"",
                        precio:"",
                        nube:null,
-                       user:null,
+                       user:null
             
                     }
                 },300);
@@ -202,10 +200,10 @@
                 me.plan_almacenamiento.nombre_plan == '' ? me.planErrors.nombre_plan = true : me.planErrors.nombre_plan = false;
                 me.plan_almacenamiento.precio == '' ? me.planErrors.precio = true : me.planErrors.precio = false;
                 me.plan_almacenamiento.nube_id == null ? me.planErrors.nube = true : me.planErrors.nube = false;
-                me.plan_almacenamiento.user_id == null ? me.archivoErrors.user = true : me.archivoErrors.user = false;
+                me.plan_almacenamiento.user_id == null ? me.planErrors.user = true : me.planErrors.user = false;
 
 
-                if(me.plan_almacenamiento.nombre_plan.precio){
+                if(me.plan_almacenamiento.nombre_plan){
                     let accion = me.plan_almacenamiento.id == null ? "add" : "upd";
                     
                     me.plan_almacenamiento.nube = {
@@ -273,8 +271,6 @@
                 });
                 switch (accion) {
                     case "add":
-                        //me.archivos.unshift(nube);
-
                         me.fetchPlan();
                         Toast.fire({
                             icon: 'success',

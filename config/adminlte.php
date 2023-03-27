@@ -328,11 +328,12 @@ return [
         [
             'text'       => 'Archivo',
             'icon'       => 'fas fw fa-file',
+            'icon_color'  => 'success',
             'route'        => 'archivos.create',
         ],
         [
             'text'       => 'Plan',
-            'icon'       => 'fas fw fa-shop',
+            'icon'       => 'fas fw fa-image',
             'route'        => 'plan_almacenamientos.create',
         ],
     ],
